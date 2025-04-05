@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    private float moveSpeed = 10f;
-    private float jumpForce = 13.25f;
+    public float moveSpeed = 10f;
+    public float jumpForce = 13.25f;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     bool isRightWalled = false;
     bool isLeftWalled = false;
+
 
     void Start()
     {
