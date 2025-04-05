@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Layer1
   - Layer2
+  - DoorTrigger
+  - Interactable
   layers:
   - Default
   - TransparentFX
