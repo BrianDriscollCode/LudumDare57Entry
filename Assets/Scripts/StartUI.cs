@@ -11,7 +11,7 @@ public class StartUI : MonoBehaviour
 
     public void OnButtonClick()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level1");
     }
 
 }
