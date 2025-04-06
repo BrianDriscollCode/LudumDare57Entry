@@ -44,6 +44,10 @@ public class PostProcessing : MonoBehaviour
         {
             Debug.LogWarning("Grain not found in the volume profile.");
         }
+
+        vignetteTarget = 0.3f;
+        grainTarget = 0.02f;
+        grain.active = true;
     }
 
     private void Update()
@@ -52,22 +56,22 @@ public class PostProcessing : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("Level 1 vignette and grain");
-            vignetteTarget = 0.0f;
-            grainTarget = 0.0f;
+            vignetteTarget = 0.3f;
+            grainTarget = 0.02f;
             grain.active = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Debug.Log("Level 2 vignette and grain");
-            vignetteTarget = 0.3f;
-            grainTarget = 0.2f;
+            vignetteTarget = 0.4f;
+            grainTarget = 0.3f;
             grain.active = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Debug.Log("Level 3 vignette and grain");
-            vignetteTarget = 0.45f;
-            grainTarget = 0.35f;
+            vignetteTarget = 0.50f;
+            grainTarget = 0.4f;
             grain.active = false; // Optional: depends on whether you want to still animate it
         }
 
