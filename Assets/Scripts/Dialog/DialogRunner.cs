@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-using UnityEngine;
 
-using UnityEngine;
 
 public class DialogRunner : MonoBehaviour
 {
@@ -13,9 +11,20 @@ public class DialogRunner : MonoBehaviour
     private int currentPanelIndex = -1;
     private bool canRunDialog = false;
 
+    Player player;
+
+    GameObject HelperGhost;
+    Animator HelperGhostAnimator;
+
+    LevelManager levelManager;
+
     private void Start()
     {
-        //SetAllPanelsInactive();
+        levelManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>(); ;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        HelperGhost = GameObject.FindGameObjectWithTag("HelperGhost");
+        HelperGhostAnimator = HelperGhost.GetComponent<Animator>();
+        SetAllPanelsInactive();
     }
 
     private void Update()
@@ -45,6 +54,9 @@ public class DialogRunner : MonoBehaviour
         else
         {
             canRunDialog = false; // end of dialog
+            HelperGhostAnimator.enabled = true;
+            HelperGhostAnimator.Play("Disappear");
+            levelManager.unlockedRealms[2] = true;
         }
     }
 

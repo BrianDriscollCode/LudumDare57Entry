@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum RealmState
     {
-        
+        ONE, TWO, THREE, FOUR, FIVE
     }
 
-    // Update is called once per frame
-    void Update()
+    public RealmState currentRealmState = RealmState.ONE;
+
+    public int collectedOrbs = 0;
+
+    public Dictionary<int, bool> unlockedRealms;
+
+    private void Start()
     {
-        
+        unlockedRealms = new Dictionary<int, bool>();
+
+        unlockedRealms.Add(1, true);
+        unlockedRealms.Add(2, false);
+        unlockedRealms.Add(3, false);
+        unlockedRealms.Add(4, false);
+        unlockedRealms.Add(5, false);
     }
 }

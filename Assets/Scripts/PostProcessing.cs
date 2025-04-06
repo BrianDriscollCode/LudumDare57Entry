@@ -15,8 +15,12 @@ public class PostProcessing : MonoBehaviour
 
     [SerializeField] private float transitionSpeed = 2f;
 
+    LevelManager levelManager;
+
     private void Start()
     {
+        levelManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+
         volume = GetComponent<Volume>();
 
         if (volume == null || volume.profile == null)
@@ -53,26 +57,40 @@ public class PostProcessing : MonoBehaviour
     private void Update()
     {
         // Trigger transitions
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && levelManager.unlockedRealms[1])
         {
             Debug.Log("Level 1 vignette and grain");
             vignetteTarget = 0.3f;
             grainTarget = 0.02f;
             grain.active = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && levelManager.unlockedRealms[2])
         {
             Debug.Log("Level 2 vignette and grain");
             vignetteTarget = 0.4f;
             grainTarget = 0.3f;
             grain.active = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && levelManager.unlockedRealms[3])
         {
             Debug.Log("Level 3 vignette and grain");
             vignetteTarget = 0.50f;
             grainTarget = 0.4f;
-            grain.active = false; // Optional: depends on whether you want to still animate it
+            grain.active = true; // Optional: depends on whether you want to still animate it
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && levelManager.unlockedRealms[4])
+        {
+            Debug.Log("Level 3 vignette and grain");
+            vignetteTarget = 0.75f;
+            grainTarget = 0.6f;
+            grain.active = true; // Optional: depends on whether you want to still animate it
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5) && levelManager.unlockedRealms[5])
+        {
+            Debug.Log("Level 3 vignette and grain");
+            vignetteTarget = 0.85f;
+            grainTarget = 0.8f;
+            grain.active = true; // Optional: depends on whether you want to still animate it
         }
 
         // Smoothly move towards the target values

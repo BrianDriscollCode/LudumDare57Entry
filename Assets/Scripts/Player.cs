@@ -6,6 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        INGAME,
+        INDIALOG
+    }
+
+    public PlayerState currentPlayerState = PlayerState.INGAME;
+
     public float moveSpeed = 10f;
     public float jumpForce = 13.25f;
     public LayerMask groundLayer;
@@ -36,44 +44,52 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Ground check
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-        // Raycast for right wall
-        isRightWalled =
-            Physics2D.Raycast(rightUpperCheck.position, Vector2.right, wallCheckDistance, groundLayer) ||
-            Physics2D.Raycast(rightLowerCheck.position, Vector2.right, wallCheckDistance, groundLayer);
-
-        if (isRightWalled)
+        if (currentPlayerState == PlayerState.INGAME)
         {
-            Debug.Log("IsRightWalled");
+            // Ground check
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+            // Raycast for right wall
+            isRightWalled =
+                Physics2D.Raycast(rightUpperCheck.position, Vector2.right, wallCheckDistance, groundLayer) ||
+                Physics2D.Raycast(rightLowerCheck.position, Vector2.right, wallCheckDistance, groundLayer);
+
+            if (isRightWalled)
+            {
+                Debug.Log("IsRightWalled");
+            }
+
+            // Raycast for left wall
+            isLeftWalled =
+                Physics2D.Raycast(leftUpperCheck.position, Vector2.left, wallCheckDistance, groundLayer) ||
+                Physics2D.Raycast(leftLowerCheck.position, Vector2.left, wallCheckDistance, groundLayer);
+
+            if (isLeftWalled)
+            {
+                Debug.Log("IsLeftWalled");
+            }
+
+            // Horizontal movement
+            float move = 0f;
+
+            if (Input.GetKey(KeyCode.D) && (!isRightWalled || isGrounded))
+                move = 1f;
+            else if (Input.GetKey(KeyCode.A) && (!isLeftWalled || isGrounded))
+                move = -1f;
+
+            rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
+
+            // Jump
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
         }
-
-        // Raycast for left wall
-        isLeftWalled =
-            Physics2D.Raycast(leftUpperCheck.position, Vector2.left, wallCheckDistance, groundLayer) ||
-            Physics2D.Raycast(leftLowerCheck.position, Vector2.left, wallCheckDistance, groundLayer);
-
-        if (isLeftWalled)
+        else
         {
-            Debug.Log("IsLeftWalled");
+            rb.velocity = new Vector2(0f,0f);
         }
-
-        // Horizontal movement
-        float move = 0f;
-
-        if (Input.GetKey(KeyCode.D) && (!isRightWalled || isGrounded))
-            move = 1f;
-        else if (Input.GetKey(KeyCode.A) && (!isLeftWalled || isGrounded))
-            move = -1f;
-
-        rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
-
-        // Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
+        
     }
 
     void OnDrawGizmosSelected()

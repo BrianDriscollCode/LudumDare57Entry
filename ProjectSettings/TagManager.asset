@@ -8,6 +8,11 @@ TagManager:
   - Layer2
   - DoorTrigger
   - Interactable
+  - HelperGhost
+  - LevelManager
+  - Layer3
+  - Layer4
+  - Layer5
   layers:
   - Default
   - TransparentFX

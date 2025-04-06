@@ -5,6 +5,7 @@ using UnityEngine;
 public class HandlePlayerAnimations : MonoBehaviour
 {
     Animator animator;
+    Player player;
 
     enum playerAnimState
     {
@@ -16,10 +17,16 @@ public class HandlePlayerAnimations : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        player = GetComponent<Player>();
     }
 
     private void Update()
     {
+        if (player.currentPlayerState == Player.PlayerState.INDIALOG)
+        {
+            animator.Play("IdleAnim");
+            return;
+        }
 
         bool isMovingLeft = Input.GetKey(KeyCode.A);
         bool isMovingRight = Input.GetKey(KeyCode.D);
